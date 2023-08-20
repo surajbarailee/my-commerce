@@ -1,0 +1,95 @@
+service: backend
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  profile: serverless
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+        - s3:*
+      Resource: "*"
+
+plugins:
+  - serverless-webpack
+
+package:
+  individually: true
+
+custom:
+  tableName: products
+  thumbnailBucketName: mycommercethumbnailbucket
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    packagerOptions:
+      scripts:
+        - npm install --arch=x64 --platform=linux --libc=glibc sharp
+
+functions:
+  getProductsList:
+    handler: lambdas/api-endpoints/getProductsList.handler
+    events:
+      - http:
+          path: products
+          method: GET
+          cors: true
+
+  addProduct:
+    handler: lambdas/api-endpoints/addProduct.handler
+    events:
+      - http:
+          path: products
+          method: POST
+          cors: true
+
+  deleteProduct:
+    handler: lambdas/api-endpoints/deleteProduct.handler
+    events:
+      - http:
+          path: products/{id}
+          method: DELETE
+          cors: true
+
+  generateThumbnail:
+    handler: lambdas/utilities/generateThumbnail.handler
+    timeout: 15
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - Products
+              - StreamArn
+          maximumRetryAttempts: 1
+          startingPosition: LATEST
+          batchSize: 1
+          enabled: true
+    environment:
+      THUMBNAIL_BUCKET: ${self:custom.thumbnailBucketName}
+
+resources:
+  Resources:
+    Thumbnail:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: mycommercethumbnailbucket
+    Products:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
+
+configValidationMode: error

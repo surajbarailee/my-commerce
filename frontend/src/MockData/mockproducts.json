@@ -1,38 +1,38 @@
 [
     {
-      "ID": "001",
-      "Name": "Product 1",
-      "Description": "This is the description for Product 1.",
-      "Price": 19.99,
-      "ImageURL": "https://loremflickr.com/320/240?random=1"
+      "id": "001",
+      "name": "Product 1",
+      "description": "This is the description for Product 1.",
+      "price": 19.99,
+      "imageUrl": "https://loremflickr.com/320/240?random=1"
     },
     {
-      "ID": "002",
-      "Name": "Product 2",
-      "Description": "This is the description for Product 2.",
-      "Price": 24.99,
-      "ImageURL": "https://loremflickr.com/320/240?random=2"
+      "id": "002",
+      "name": "Product 2",
+      "description": "This is the description for Product 2.",
+      "price": 24.99,
+      "imageUrl": "https://loremflickr.com/320/240?random=2"
     },
     {
-      "ID": "003",
-      "Name": "Product 3",
-      "Description": "This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.",
-      "Price": 14.99,
-      "ImageURL": "https://loremflickr.com/320/240?random=3"
+      "id": "003",
+      "name": "Product 3",
+      "description": "This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.This is the description for Product 3.",
+      "price": 14.99,
+      "imageUrl": "https://loremflickr.com/320/240?random=3"
     },
     {
-      "ID": "004",
-      "Name": "Product 4",
-      "Description": "This is the description for Product 4.",
-      "Price": 34.99,
-      "ImageURL": "https://loremflickr.com/320/240?random=4"
+      "id": "004",
+      "name": "Product 4",
+      "description": "This is the description for Product 4.",
+      "price": 34.99,
+      "imageUrl": "https://loremflickr.com/320/240?random=4"
     },
     {
-      "ID": "005",
-      "Name": "Product 5",
-      "Description": "This is the description for Product 5.",
-      "Price": 39.99,
-      "ImageURL": "https://loremflickr.com/320/240?random=5"
+      "id": "005",
+      "name": "Product 5",
+      "description": "This is the description for Product 5.",
+      "price": 39.99,
+      "imageUrl": "https://loremflickr.com/320/240?random=5"
     }
     
   ]
