@@ -79,7 +79,8 @@ function AddProductForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (isFormValid(event)) {
+    const formValidity = await isFormValid(event)
+    if (formValidity) {
       try {
         setisBeingSubmitted(true);
         const response =  await createProduct({
