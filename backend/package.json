@@ -1,11 +1,15 @@
 {
-  "scripts": {
-    "preinstall": "SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux --libc=glibc sharp"
-  },
   "dependencies": {
+    "@aws-sdk/s3-request-presigner": "^3.395.0",
+    "amazon-s3-uri": "^0.1.1",
     "axios": "^1.4.0",
+    "resize-image-buffer": "^1.0.0",
+    "serverless": "^3.34.0",
     "serverless-webpack": "^5.13.0",
     "sharp": "^0.32.5",
     "webpack": "^5.88.2"
+  },
+  "devDependencies": {
+    "node-loader": "^2.0.0"
   }
 }

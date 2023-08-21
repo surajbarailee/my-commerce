@@ -1,7 +1,8 @@
 const AWS = require("aws-sdk");
 const Dynamo = require("./connection");
-const sharp = require("sharp");
 const axios = require("axios");
+const jimp = require("jimp/dist/index");
+const fileType = require('file-type');
 
 const s3 = new AWS.S3();
 const HEIGHT = 200;
@@ -29,19 +30,33 @@ exports.handler = async (event, context) => {
     url: imageUrl,
     responseType: "arraybuffer",
   });
-  const buffer = Buffer.from(imageResponse.data, "binary");
-  const resizedImage = await sharp(buffer).resize(WIDTH, HEIGHT).toBuffer();
+  const image = Buffer.from(imageResponse.data, "binary");
+  // const image = await jimp.read(imageUrl)
+  // image.resize = image.resize(HEIGHT,WIDTH)
 
-  const metadata = await sharp(buffer.Body).metadata();
-  const mimeType = `image/${metadata.format}`;
+  const type = await fileType.fromBuffer(image);
 
-  const s3Key = `thumbnails/${id}.${metadata.format}`;
+
+  const supportedFormats = {
+    bmp: jimp.MIME_BMP,
+    jpg: jimp.MIME_JPEG,
+    png: jimp.MIME_PNG,
+  };
+
+  if (!type || !Object.keys(supportedFormats).includes(type.ext)) {
+    throw new Error('Image format not supported');
+  }
+
+
+  const resizedImage = image;
+
+  const s3Key = `thumbnails/${id}.${type.ext}`;
   await s3
     .putObject({
       Bucket: thumbnailBucket,
       Key: s3Key,
       Body: resizedImage,
-      ContentType: mimeType,
+      ContentType: type.mime,
     })
     .promise();
 

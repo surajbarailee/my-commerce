@@ -1,7 +1,15 @@
 module.exports = {
   target: "node",
   mode: "none",
-  externals: {
-    'sharp': 'commonjs sharp'
-  }
+  node: {
+    __dirname: false,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.node$/,
+        loader: "node-loader",
+      },
+    ],
+  },
 };

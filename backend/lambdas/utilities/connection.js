@@ -5,7 +5,7 @@ const documentClient = new AWS.DynamoDB.DocumentClient();
 const TABLENAME = "products";
 
 const Dynamo = {
-  async getAllProducts(page = 1, limit = 10) {
+  async getAllProducts(page = 1, limit = 1000) {
     try {
       if (page && page > 1) {
         const lastEvaluatedKey = data.LastEvaluatedKey.primary_key;
@@ -67,7 +67,7 @@ const Dynamo = {
 
   async updateThumbnail(id, s3ImageUrl) {
     try {
-      await dynamodb
+      await documentClient
         .update({
           TableName: TABLENAME,
           Key: { id: id },
@@ -78,7 +78,7 @@ const Dynamo = {
         })
         .promise();
     } catch (error) {
-      throw new Error(`Unable to update image Url ${imageUrl} for id ${id}`);
+      throw new Error(`Unable to update image Url ${s3ImageUrl} for id ${id}. ${error}`);
     }
   },
 };

@@ -28,7 +28,9 @@ function validateProduct(product) {
 
 exports.handler = async (event,context) => {
   try {
+    console.log(event)
     const product = JSON.parse(event.body);
+    console.log(product)
     const validationErrors = validateProduct(product);
 
     if (validationErrors.length > 0) {
