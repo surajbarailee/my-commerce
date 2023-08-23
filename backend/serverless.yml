@@ -10,9 +10,24 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:*
-        - s3:*
-      Resource: "*"
+        - dynamodb:BatchGetItem
+        - dynamodb:GetRecords
+        - dynamodb:GetShardIterator
+        - dynamodb:DescribeStream
+        - dynamodb:ListStreams
+      Resource:
+        Fn::GetAtt:
+          - Products
+          - StreamArn
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:s3:::"
+            - Ref: Thumbnail
+            - "/*"
 
 plugins:
   - serverless-webpack
