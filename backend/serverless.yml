@@ -28,6 +28,16 @@ provider:
           - - "arn:aws:s3:::"
             - Ref: Thumbnail
             - "/*"
+  apiGateWay:
+    apiKeys:
+      - MyCommerceApiKeys
+    usagePlan:
+      quota:
+        limit: 1000
+        period: MONTH
+      throttle:
+        rateLimit: 50
+        burstLimit: 100
 
 plugins:
   - serverless-webpack
